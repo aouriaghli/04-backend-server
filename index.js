@@ -23,6 +23,8 @@ console.log(process.env)
 //Rutas
 app.get( '/api/usuarios', require('./routes/usuarios.js'));
 app.post( '/api/usuarios', require('./routes/usuarios.js'));
+app.put( '/api/usuarios/:id', require('./routes/usuarios.js'));
+app.delete( '/api/usuarios/:id', require('./routes/usuarios.js'));
 
 
 app.listen( process.env.PORT, () => {
