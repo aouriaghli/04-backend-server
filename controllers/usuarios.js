@@ -68,7 +68,7 @@ const actualizarUsuario = async(req, res = response) =>{
         if (!usuarioDB){
             res.status(404).json({
                 ok: false,
-                msg : 'No existe un usuario con ese id' + uid
+                msg : 'No existe un usuario con ese id ' + uid
             });
         }
 
@@ -82,7 +82,7 @@ const actualizarUsuario = async(req, res = response) =>{
             if (existeEmail){
                 res.status(400).json({
                     ok: false,
-                    msg : 'Ya existe un usuario con ese email' + req.body.email
+                    msg : 'Ya existe un usuario con ese email ' + req.body.email
                 });
             }
         }
@@ -120,7 +120,7 @@ const borrarUsuario = async(req, res = response) =>{
         if (!usuarioDB){
             res.status(404).json({
                 ok: false,
-                msg : 'No existe un usuario con ese id' + uid
+                msg : 'No existe un usuario con ese id ' + uid
             });
         }
 
@@ -128,7 +128,7 @@ const borrarUsuario = async(req, res = response) =>{
 
         res.status(200).json({
             ok: true,
-            msg : 'Usuario borrado con id' + uid
+            msg : 'Usuario borrado con id ' + uid
         });
 
         
