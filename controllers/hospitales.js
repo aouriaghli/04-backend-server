@@ -3,10 +3,15 @@ const Hospital = require('../models/hospital');
 const Usuario = require('../models/usuario');
 
 
-const getHospitales = (req, res) =>{
+const getHospitales = async(req, res) =>{
+
+    //Recupero hospitales, pero tb recupero usuario que lo ha creado.
+    const hospitales = await Hospital.find()
+                                     .populate('usuario','nombre img');
+
     res.json({
         ok:true,
-        msg: 'getHospitales'
+        hospitales
     });
 }
 
