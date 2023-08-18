@@ -10,9 +10,9 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = express.Router();
 
-router.get( '/*', validarJWT, getUsuarios);
+router.get( '/', validarJWT, getUsuarios);
 
-router.post('/*', 
+router.post('/', 
     [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
         check('password','La contraseña es obligatoria').not().isEmpty(),
@@ -22,7 +22,7 @@ router.post('/*',
     crearUsuarios
 );
 
-router.put('/*', 
+router.put('/:id', 
     [
         validarJWT,
         check('nombre', 'Tienes que poner tu nombre').not().isEmpty(),
@@ -33,7 +33,7 @@ router.put('/*',
     actualizarUsuario
 );
 
-router.delete('/*',validarJWT, borrarUsuario);
+router.delete('/:id',validarJWT, borrarUsuario);
 
 
 module.exports = router;

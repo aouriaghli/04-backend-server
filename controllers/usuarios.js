@@ -5,12 +5,27 @@ const { generarJWT } = require('../helpers/jwt');
 
 const getUsuarios = async(req, res) => {
    
-    const usuarios = await Usuario.find({}, 'nombre email role google');
+    const desde = Number(req.query.desde) || 0;
+
+    // const usuarios = await Usuario.find({}, 'nombre email role google')
+    //                                 .skip(desde)
+    //                                 .limit(5);
+
+    // const total = await Usuario.count();
+
+    //Asi se ejecutan las 2 al mismo tiempo.
+    const [usuarios, total] = await Promise.all([
+        Usuario.find({}, 'nombre email role google')
+        .skip(desde)
+        .limit(5),
+        Usuario.count()
+    ]);
 
     res.json({
         ok: true,
         usuarios: usuarios,
-        uid : req.uid
+        uid : req.uid,
+        total
     })
 } 
 
@@ -59,9 +74,8 @@ const actualizarUsuario = async(req, res = response) =>{
     
     // TODO: validar token y comprobar si el usuario correcto.
 
-    const path = req.params[0]; // recuperamos el param 0 que es el id.
+    const uid = req.params.id;
 
-    uid = path.split('/')[2];
     try {
 
         const usuarioDB = await Usuario.findById(uid);
@@ -110,9 +124,7 @@ const actualizarUsuario = async(req, res = response) =>{
 }
 
 const borrarUsuario = async(req, res = response) =>{
-    const path = req.params[0]; // recuperamos el param 0 que es el id.
-
-    uid = path.split('/')[2];
+    const uid = req.params.id;
 
     try {
 

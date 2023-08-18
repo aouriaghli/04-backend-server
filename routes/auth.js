@@ -10,7 +10,7 @@ const { validarCampos} = require('../middlewares/validar-campos');
 const router = express.Router();
 
 
-router.post('/*', 
+router.post('/', 
     [
         // check('nombre', 'El nombre es obligatorio').not().isEmpty(),        
         check('email','El email es obligatorio').isEmail(),

@@ -11,9 +11,9 @@ const { check } = require('express-validator');
 
 const router = express.Router();
 
-router.get( '/*', getHospitales);
+router.get('/', getHospitales);
 
-router.post('/*', 
+router.post('/', 
     [
         validarJWT,
         check('nombre', 'El nombre del hospital es necesario').not().isEmpty(),
@@ -22,14 +22,14 @@ router.post('/*',
     crearHospital
 );
 
-router.put('/*', 
+router.put('/:id', 
     [
         
     ],
     actualizarHospital
 );
 
-router.delete('/*', borrarHospital);
+router.delete('/:id', borrarHospital);
 
 
 module.exports = router;

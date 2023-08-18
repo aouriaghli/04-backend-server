@@ -11,9 +11,9 @@ const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = express.Router();
 
-router.get( '/*', getMedicos);
+router.get( '/', getMedicos);
 
-router.post('/*', 
+router.post('/', 
     [
         validarJWT,
         check("nombre", 'El nombre del médico es obligatorio').not().isEmpty(),
@@ -23,14 +23,14 @@ router.post('/*',
     crearMedico
 );
 
-router.put('/*', 
+router.put('/:id', 
     [
         
     ],
     actualizarMedico
 );
 
-router.delete('/*', borrarMedico);
+router.delete('/:id', borrarMedico);
 
 
 module.exports = router;
