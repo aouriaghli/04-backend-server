@@ -40,18 +40,72 @@ const crearHospital = async(req, res = response) =>{
     }
 }
 
-const actualizarHospital = (req, res) =>{
+const actualizarHospital = async(req, res) =>{
+   
+    const id = req.params.id;
+    const uid = req.uid;
+
+   try {
+    
+    const hospitalDB = await Hospital.findById(id);
+    if (!hospitalDB){
+        res.status(404).json({
+            ok:false,
+            msg: 'Hospital no encontrado'
+        });
+    }
+
+    //hospitalDB.nombre = req.body.nombre;
+    const cambiosHospital ={
+        ...req.body,
+        usuario: uid
+    }
+
+    const hospitalActualizado = await Hospital.findByIdAndUpdate(id, cambiosHospital, {new:true});
+    
+
     res.json({
         ok:true,
-        msg: 'actualizarHospital'
+        hospital : hospitalActualizado
     });
+   } catch (error) {
+    console.log(error);
+    res.status(500).json({
+        ok:false,
+        msg: 'Error al actualizar la información del hospital'
+    });
+   }
+
 }
 
-const borrarHospital = (req, res) =>{
+const borrarHospital = async(req, res) =>{
+    const id = req.params.id;
+
+   try {
+    
+    const hospitalDB = await Hospital.findById(id);
+    if (!hospitalDB){
+        res.status(404).json({
+            ok:false,
+            msg: 'Hospital no encontrado'
+        });
+    }
+
+
+    await Hospital.findByIdAndDelete(id);
+    
+
     res.json({
         ok:true,
-        msg: 'borrarHospital'
+        msg : "Hospital Borrado con éxito",
     });
+   } catch (error) {
+    console.log(error);
+    res.status(500).json({
+        ok:false,
+        msg: 'Error al eliminar el hospital'
+    });
+   }
 }
 
 
