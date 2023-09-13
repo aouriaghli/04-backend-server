@@ -101,7 +101,15 @@ const actualizarUsuario = async(req, res = response) =>{
             }
         }
 
-        campos.email = email;
+        if(!usuarioDB.google){
+            campos.email = email;
+        }else if(usuarioDB.email !== email){
+            res.status(400).json({
+                ok: false,
+                msg : 'Usuario de google no puede cambiar su email'
+            });
+        }
+        
 
         // Al desestructurar en la linea 71, ya no hace falta hacer estas lineas de abajo
         // delete campos.password; // no quiero actualizar contraseña.
